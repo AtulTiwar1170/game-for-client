@@ -26,9 +26,9 @@ export default function GameTab() {
   const fetchPointsAndRequests = async (uid) => {
     if (!uid) return;
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const apiUrl = import.meta.env.VITE_API_URL || '';
       // Fetch user points
-      const ptsRes = await fetch(`${apiUrl}/api/users/${uid}/points`);
+      const ptsRes = await fetch(`${apiUrl}/api/users/${uid}/points`, { credentials: 'include' });
       const ptsJson = await ptsRes.json();
       if (ptsJson.success) {
         setPoints(ptsJson.points);
@@ -57,8 +57,8 @@ export default function GameTab() {
   const fetchBids = async (uid) => {
     if (!uid) return;
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-      const res = await fetch(`${apiUrl}/api/game/bids/${uid}`);
+      const apiUrl = import.meta.env.VITE_API_URL || '';
+      const res = await fetch(`${apiUrl}/api/game/bids/${uid}`, { credentials: 'include' });
       const json = await res.json();
       if (json.success) {
         setBids(json.bids);
@@ -120,7 +120,7 @@ export default function GameTab() {
 
     try {
       setLoading(true);
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const apiUrl = import.meta.env.VITE_API_URL || '';
       const res = await fetch(`${apiUrl}/api/game/bid`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -132,7 +132,8 @@ export default function GameTab() {
           harafSide: gameType === 'single_haraf' ? harafSide : undefined,
           guess,
           points: pts
-        })
+        }),
+        credentials: 'include'
       });
       const data = await res.json();
       if (data.success) {
@@ -158,8 +159,8 @@ export default function GameTab() {
 
   const handleResetPoints = async () => {
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-      const res = await fetch(`${apiUrl}/api/users/${userId}/points`);
+      const apiUrl = import.meta.env.VITE_API_URL || '';
+      const res = await fetch(`${apiUrl}/api/users/${userId}/points`, { credentials: 'include' });
       const data = await res.json();
       if (data.success) {
         // Reset/refresh from server

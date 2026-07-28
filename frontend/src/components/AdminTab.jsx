@@ -29,10 +29,11 @@ export default function AdminTab() {
   const fetchAdminData = async () => {
     try {
       setLoading(true);
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const apiUrl = import.meta.env.VITE_API_URL || '';
       // 1. Fetch Logs
       const res = await fetch(`${apiUrl}/api/admin/logs`, {
-        headers: { 'x-user-role': 'admin' }
+        headers: { 'x-user-role': 'admin' },
+        credentials: 'include'
       });
       const json = await res.json();
       if (json.success) {
@@ -45,7 +46,8 @@ export default function AdminTab() {
 
       // 2. Fetch Balance Requests
       const reqRes = await fetch(`${apiUrl}/api/admin/balance-requests`, {
-        headers: { 'x-user-role': 'admin' }
+        headers: { 'x-user-role': 'admin' },
+        credentials: 'include'
       });
       const reqJson = await reqRes.json();
       if (reqJson.success) {
@@ -53,7 +55,7 @@ export default function AdminTab() {
       }
 
       // 3. Fetch Payment Methods
-      const payRes = await fetch(`${apiUrl}/api/payment-methods`);
+      const payRes = await fetch(`${apiUrl}/api/payment-methods`, { credentials: 'include' });
       const payJson = await payRes.json();
       if (payJson.success) {
         setPaymentMethods(payJson.data);
@@ -68,14 +70,15 @@ export default function AdminTab() {
   const handleRequestAction = async (id, status) => {
     setRequestMsg('');
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const apiUrl = import.meta.env.VITE_API_URL || '';
       const res = await fetch(`${apiUrl}/api/admin/balance-requests/${id}/action`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'x-user-role': 'admin'
         },
-        body: JSON.stringify({ status })
+        body: JSON.stringify({ status }),
+        credentials: 'include'
       });
       const data = await res.json();
       if (data.success) {
@@ -109,7 +112,7 @@ export default function AdminTab() {
     }
 
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const apiUrl = import.meta.env.VITE_API_URL || '';
       const res = await fetch(`${apiUrl}/api/admin/payment-methods`, {
         method: 'POST',
         headers: {
@@ -119,7 +122,8 @@ export default function AdminTab() {
         body: JSON.stringify({
           name: newPaymentName,
           qrImage: newPaymentQRBase64
-        })
+        }),
+        credentials: 'include'
       });
       const data = await res.json();
       if (data.success) {
@@ -140,10 +144,11 @@ export default function AdminTab() {
   const handleDeletePaymentMethod = async (id) => {
     setPaymentMsg('');
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const apiUrl = import.meta.env.VITE_API_URL || '';
       const res = await fetch(`${apiUrl}/api/admin/payment-methods/${id}`, {
         method: 'DELETE',
-        headers: { 'x-user-role': 'admin' }
+        headers: { 'x-user-role': 'admin' },
+        credentials: 'include'
       });
       const data = await res.json();
       if (data.success) {
@@ -170,7 +175,7 @@ export default function AdminTab() {
     }
 
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const apiUrl = import.meta.env.VITE_API_URL || '';
       const res = await fetch(`${apiUrl}/api/admin/override`, {
         method: 'POST',
         headers: { 
@@ -181,7 +186,8 @@ export default function AdminTab() {
           userId: targetUserId,
           username: targetUsername || 'Override User',
           override: overrideCondition
-        })
+        }),
+        credentials: 'include'
       });
       const data = await res.json();
       if (data.success) {

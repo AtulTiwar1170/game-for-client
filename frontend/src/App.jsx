@@ -46,11 +46,12 @@ export default function App() {
 
     try {
       const endpoint = authMode === 'login' ? 'login' : 'register';
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const apiUrl = import.meta.env.VITE_API_URL || '';
       const res = await fetch(`${apiUrl}/api/auth/${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: usernameInput, password: passwordInput })
+        body: JSON.stringify({ username: usernameInput, password: passwordInput }),
+        credentials: 'include'
       });
       const data = await res.json();
       if (res.ok && data.success) {

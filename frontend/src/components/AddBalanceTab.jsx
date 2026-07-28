@@ -17,16 +17,16 @@ export default function AddBalanceTab({ currentUser }) {
   const fetchPointsAndRequests = async () => {
     if (!userId) return;
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const apiUrl = import.meta.env.VITE_API_URL || '';
       // 1. Fetch user points
-      const ptsRes = await fetch(`${apiUrl}/api/users/${userId}/points`);
+      const ptsRes = await fetch(`${apiUrl}/api/users/${userId}/points`, { credentials: 'include' });
       const ptsJson = await ptsRes.json();
       if (ptsJson.success) {
         setPoints(ptsJson.points);
       }
       
       // 2. Fetch payment methods
-      const payRes = await fetch(`${apiUrl}/api/payment-methods`);
+      const payRes = await fetch(`${apiUrl}/api/payment-methods`, { credentials: 'include' });
       const payJson = await payRes.json();
       if (payJson.success) {
         setPaymentMethods(payJson.data);
@@ -34,7 +34,8 @@ export default function AddBalanceTab({ currentUser }) {
 
       // 3. Fetch admin's balance requests to filter for this user
       const reqRes = await fetch(`${apiUrl}/api/admin/balance-requests`, {
-        headers: { 'x-user-role': 'admin' }
+        headers: { 'x-user-role': 'admin' },
+        credentials: 'include'
       });
       const reqJson = await reqRes.json();
       if (reqJson.success) {
@@ -79,7 +80,7 @@ export default function AddBalanceTab({ currentUser }) {
 
     try {
       setLoading(true);
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const apiUrl = import.meta.env.VITE_API_URL || '';
       const res = await fetch(`${apiUrl}/api/balance/request`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -88,7 +89,8 @@ export default function AddBalanceTab({ currentUser }) {
           username,
           points: Number(reqPoints),
           screenshot: screenshotBase64
-        })
+        }),
+        credentials: 'include'
       });
       const data = await res.json();
       if (data.success) {

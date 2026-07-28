@@ -30,7 +30,12 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  origin: (origin, callback) => {
+    // Mirror request origin (needed to support credentialed requests from multiple origins e.g. netlify & localhost)
+    callback(null, true);
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'x-user-role'],
   credentials: true
 }));
 app.use(express.json({ limit: '10mb' }));

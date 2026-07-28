@@ -79,8 +79,8 @@ export default function ResultsTab() {
   const fetchResults = async () => {
     try {
       setLoading(true);
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-      const res = await fetch(`${apiUrl}/api/results/today`);
+      const apiUrl = import.meta.env.VITE_API_URL || '';
+      const res = await fetch(`${apiUrl}/api/results/today`, { credentials: 'include' });
       const json = await res.json();
       if (json.success) {
         setResults(json.data);
@@ -88,7 +88,7 @@ export default function ResultsTab() {
         setServerTime(new Date(json.serverTime));
       }
 
-      const predRes = await fetch(`${apiUrl}/api/predictions/today`);
+      const predRes = await fetch(`${apiUrl}/api/predictions/today`, { credentials: 'include' });
       const predJson = await predRes.json();
       if (predJson.success) {
         setPredictions(predJson.data);
