@@ -1,0 +1,80 @@
+@import "tailwindcss";
+
+@layer base {
+  html {
+    font-size: 16px;
+  }
+  body {
+    background-color: #f1f5f9; /* Soft light slate background */
+    color: #0f172a; /* Slate 900 */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    font-family: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  h1 {
+    font-size: 1.75rem; /* 28px */
+  }
+  @media (min-width: 1024px) {
+    h1 {
+      font-size: 2.5rem; /* 40px */
+    }
+  }
+
+  #root {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #f8fafc; /* Crisp off-white root background */
+    color: #0f172a;
+    display: flex;
+    flex-direction: column;
+    box-shadow: none;
+    position: relative; /* relative */
+    padding-bottom: 140px;
+  }
+}
+
+/* Custom animations for flashing live updates */
+@keyframes flash-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.95);
+  }
+}
+
+.animate-flash {
+  animation: flash-pulse 1.5s infinite ease-in-out;
+}
+
+/* Glassmorphism utility updated for light mode */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+/* Mobile Box-to-Screen full-bleed overrides */
+@media (max-width: 640px) {
+  .rounded-xl, .rounded-2xl, .rounded-lg {
+    border-radius: 0px !important;
+  }
+  .border, .border-t, .border-b, .border-slate-200, .border-slate-150 {
+    border-left: 0px !important;
+    border-right: 0px !important;
+    box-shadow: none !important;
+  }
+  /* Bleed grid elements edge to edge */
+  .grid {
+    gap: 0.5rem !important;
+  }
+}

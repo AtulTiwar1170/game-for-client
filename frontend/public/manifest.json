@@ -1,0 +1,16 @@
+{
+  "short_name": "Satta King",
+  "name": "Satta King Live Results & Predictions",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
+    }
+  ],
+  "start_url": ".",
+  "background_color": "#ffffff",
+  "theme_color": "#d97706",
+  "display": "standalone",
+  "orientation": "portrait"
+}
